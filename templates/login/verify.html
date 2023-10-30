@@ -1,0 +1,69 @@
+{% extends "base_site.html" %}
+
+{% block title %} Login {% endblock title %}
+
+{% block stylesheets %}
+  {{ super() }}
+  <!-- Animate.css -->
+  <link href="{{ url_for('static', filename='vendors/animate.css/animate.min.css') }}" rel="stylesheet">
+  <!-- Alertify -->
+  <link href="{{ url_for('static', filename='vendors/alertifyjs/css/alertify.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='vendors/alertifyjs/css/custom.alertify.css') }}" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block body_class %}login{% endblock body_class %}
+
+{% block body %}
+  <!-- jQuery -->
+  <script src="{{ url_for('static', filename='vendors/jquery/dist/jquery.min.js') }}"></script>
+  <!-- Alertify -->
+  <script src="{{ url_for('static', filename='vendors/alertifyjs/alertify.min.js') }}"></script>
+  <!-- Parsley -->
+  <script src="{{ url_for('static', filename='vendors/parsleyjs/dist/parsley.min.js') }}"></script>
+  <!-- Login -->
+  <script src="{{ url_for('static', filename='build/js/login.js') }}"></script>
+  <!-- Verify -->
+  <script src="{{ url_for('static', filename='build/js/verify.js') }}"></script>
+  <div>
+    <div class="login_wrapper">
+      <div class="animate form login_form">
+        <section class="login_content">
+          <form action="/verify" data-parsley-validate method="post">
+            <h1>Two Factor Auth</h1>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  {% if category == 'error' %}
+                    <div class="error-message"><h3 style="color: red;">{{ message }}</h3></div>
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+            <div class="">
+                <input class = "input-lg" type="text" name="verification_code" placeholder="Verification Code">
+                <button type="submit" class="btn btn-primary btn-lg btn-block submit" value="Verify">Verify</button>
+            </div>
+            <div class="clearfix"></div>
+          </form>
+        </section>
+      </div>
+    </div>
+  </div>
+{% endblock body %}
+
+{% block styles %}
+  <style>
+    .input-group-btn {
+      float: right;
+    }
+
+    .input-group-btn > button {
+      margin-left: 0;
+    }
+
+    .input-group-btn > button {
+      font-size: 16px;
+      padding: 10px 16px;
+    }
+  </style>
+{% endblock styles %}
